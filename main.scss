@@ -1,0 +1,102 @@
+//Sass list
+@use "sass:list";
+
+//functions
+
+@import "Components/functions";
+
+//colors variable
+@import "Components/colors";
+
+@mixin article-box(
+  $text-color: $primaryBlue,
+  $border-color: $primaryGreen,
+  $font-size: rem(1)
+) {
+  flex: 1;
+  padding: 20px 10px;
+  border: rem(1) solid $border-color;
+  color: $text-color;
+  font-size: rem(16);
+}
+
+/*Layout*/
+div {
+  border: rem(1) solid $primaryBodyColor;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  //padding: rem(10);
+  // margin-top: 1em;
+
+  h1 {
+    margin-bottom: 1em;
+    color: $primaryGreen;
+    border-bottom: rem(1) solid $primaryBlue;
+  }
+  //extends
+  h2 {
+    @extend h1;
+    padding: rem(16);
+    border: rem(1) solid $primaryBodyColor;
+  }
+}
+
+section {
+  display: flex;
+
+  article {
+    @include article-box;
+
+    &:nth-of-type(even) {
+      @include article-box($primaryBodyColor);
+    }
+  }
+
+  &:nth-of-type(2) {
+    margin-top: rem(10);
+
+    article {
+      @include article-box($primaryGreen, $primaryBlue, rem(24));
+    }
+  }
+  &:nth-of-type(2) {
+    gap: rem(30);
+    align-items: center;
+    margin-top: rem(40);
+    margin-bottom: rem(40);
+    div {
+      display: flex;
+      width: rem(45);
+      height: rem(45);
+
+      $base-color: #ffff;
+
+      @for $u from 1 through 19 {
+        &:nth-child(#{$u}) {
+          background-color: darken($base-color, $u * 5%);
+
+          @if $u < 10 {
+            color: black;
+          } @else if $u > 10 {
+            color: white;
+          } @else {
+            background-color: blue;
+            color: red;
+            //align-items: center;
+          }
+        }
+      }
+      @for $u from 1 through 12 {
+        align-items: flex-start;
+      }
+    }
+    $fs: 1rem, 2rem, 3rem;
+    @each $size in $fs {
+      .fs-#{$size} {
+        font-size: $size;
+      }
+    }
+  }
+}
